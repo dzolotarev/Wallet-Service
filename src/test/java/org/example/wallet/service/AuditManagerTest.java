@@ -1,16 +1,16 @@
-package org.example.wallet;
+package org.example.wallet.service;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
+class AuditManagerTest {
 
     @Test
-    void main() {
+    void audit() {
     }
 
     @Test
-    void askOperation() {
+    void getAll() {
     }
 }
