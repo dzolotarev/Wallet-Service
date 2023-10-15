@@ -1,16 +1,16 @@
-package org.example.wallet;
+package org.example.wallet.repository.impl;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
+class TransactionRepositoryImplTest {
 
     @Test
-    void main() {
+    void add() {
     }
 
     @Test
-    void askOperation() {
+    void findAll() {
     }
 }
