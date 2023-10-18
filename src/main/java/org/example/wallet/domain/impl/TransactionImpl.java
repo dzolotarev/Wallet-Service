@@ -60,6 +60,6 @@ public class TransactionImpl implements Transaction {
 
     @Override
     public void setDate(Date date) {
-        this.date = new Date();
+        this.date = date;
     }
 }

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
-
     private static UserRepositoryImpl INSTANCE;
 
     private final List<User> users = new LinkedList<>();
@@ -35,16 +34,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findUserByLogin(String login) {
-        for (User user : users) {
-            if (login.equals(user.getLogin())) {
-                return user;
-            }
-        }
-        return null; //ToDO надо бы возвращать Optional везде, где возвращаю null (
+        return users
+                .stream()
+                .filter(user -> user.getLogin().equals(login))
+                .findFirst()
+                .orElse(null); //ToDO надо бы возвращать Optional везде, где возвращаю null (
     }
 
-    @Override
-    public List<User> findAll() {
-        return users;
-    }
 }

@@ -4,18 +4,18 @@ import org.example.wallet.service.UserManager;
 import org.example.wallet.utils.ConsoleHelper;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class UserRegisterCommand extends UserCommand {
     @Override
-    public void execute() throws IOException {
-        UserManager userManager = new UserManager();
+    public void execute() throws IOException, SQLException {
 
         ConsoleHelper.writeMessage("Регистрация нового пользователя.");
         String login;
         while (true) {
             ConsoleHelper.writeMessage("Придумайте и введите логин :");
             login = ConsoleHelper.readString();
-            if (userManager.isLoginExist(login)) {
+            if (UserManager.getInstance().isLoginExist(login)) {
                 ConsoleHelper.writeMessage("Пользователь с таким логином уже существует!");
             } else {
                 break;
@@ -28,7 +28,7 @@ public class UserRegisterCommand extends UserCommand {
         ConsoleHelper.writeMessage("Введите ваше имя :");
         String name = ConsoleHelper.readString();
 
-        if (userManager.register(login, password, name)) {
+        if (UserManager.getInstance().register(login, password, name)) {
             ConsoleHelper.writeMessage("Пользователь создан.");
         }
     }

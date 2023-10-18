@@ -6,6 +6,9 @@ import org.example.wallet.infrastructure.in.Operation;
 
 import java.util.Date;
 
+/**
+ * Interface describing the Audit
+ */
 public interface Audit {
     Operation getOperation();
 

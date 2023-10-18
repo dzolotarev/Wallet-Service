@@ -5,10 +5,12 @@ import org.example.wallet.service.AuditManager;
 import org.example.wallet.utils.ConsoleHelper;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class UserAuditCommand implements Command {
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, SQLException {
         ConsoleHelper.writeMessage("Все действия всех пользователей.");
         while (true) {
             ConsoleHelper.writeMessage("Необходимо авторизоваться под администратором!\n(Логин: admin ; пароль: admin )");
@@ -19,11 +21,12 @@ public class UserAuditCommand implements Command {
             if (login.equals("admin") && password.equals("admin")) {
                 ConsoleHelper.writeMessage("Вы администратор!");
 
-                AuditManager auditManager = new AuditManager();
-                if (auditManager.getAll().isEmpty()) {
+                List<Audit> auditList = AuditManager.getInstance().getAll();
+
+                if (auditList.isEmpty()) {
                     ConsoleHelper.writeMessage("\tЖурнал действий пользователей пуст");
                 } else ConsoleHelper.writeMessage("\tДата операции\tИД пользователя\tТип операции\tРезультат");
-                for (Audit audit : auditManager.getAll()) {
+                for (Audit audit : auditList) {
                     ConsoleHelper.writeMessage(String.format("\t%s\t%d\t%s\t%s",
                             audit.getCreatedAt(), audit.getUserId(), audit.getOperation(), audit.getAuditOption()));
                 }

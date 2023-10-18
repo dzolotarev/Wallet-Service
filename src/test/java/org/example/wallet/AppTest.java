@@ -9,8 +9,4 @@ class AppTest {
     @Test
     void main() {
     }
-
-    @Test
-    void askOperation() {
-    }
 }

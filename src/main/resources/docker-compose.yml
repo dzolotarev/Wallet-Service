@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  wallet-service-postgres:
+    image: postgres:9.5.25
+    restart: always
+    environment:
+      POSTGRES_DB: "walletservice"
+      POSTGRES_USER: "walletuser"
+      POSTGRES_PASSWORD: "walletpassword"
+    ports:
+      - "5432:5432"

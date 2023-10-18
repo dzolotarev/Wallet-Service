@@ -2,10 +2,13 @@ package org.example.wallet.domain;
 
 import org.example.wallet.domain.impl.UserImpl;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public interface User {
-
+/**
+ * Interface describing the User
+ */
+public interface User extends Serializable {
     long getId();
 
     String getLogin();
@@ -19,6 +22,8 @@ public interface User {
     void setName(String name);
 
     Date getCreatedAt();
+
+    void setCreatedAt(Date date);
 
     /**
      * Factory for creating User objects

@@ -4,35 +4,37 @@ package org.example.wallet.service;
 import org.example.wallet.domain.Transaction;
 import org.example.wallet.domain.TransactionType;
 import org.example.wallet.repository.TransactionRepository;
-import org.example.wallet.repository.impl.TransactionRepositoryImpl;
+import org.example.wallet.repository.db.TransactionRepositoryDBImpl;
 
-import java.util.LinkedList;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TransactionManager {
+    private final TransactionRepository transactionRepository = TransactionRepositoryDBImpl.getInstance();
+    private static TransactionManager INSTANCE;
 
-    private final TransactionRepository transactionRepository;
-
-    public TransactionManager() {
-        this.transactionRepository = new TransactionRepositoryImpl();
+    private TransactionManager() {
     }
 
-    public boolean debit(UUID uuid, long value, long userId) {
-        return transactionRepository.add(uuid, TransactionType.DEBIT, value, userId);
-    }
-
-    public boolean credit(UUID uuid, long value, long userId) {
-        return transactionRepository.add(uuid, TransactionType.CREDIT, value, userId);
-    }
-
-    public List<Transaction> transactions(long userId) { //ToDO надо бы посортировать
-        List<Transaction> userTransactions = new LinkedList<>();
-        for (Transaction transaction : transactionRepository.findAll().values()) {
-            if (transaction.getUserId() == userId) {
-                userTransactions.add(transaction);
-            }
+    public static TransactionManager getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new TransactionManager();
         }
-        return userTransactions;
+        return INSTANCE;
+    }
+
+    public boolean debit(long value, long userId) throws SQLException, IOException {
+        return transactionRepository.add(TransactionType.DEBIT, value, userId);
+    }
+
+    public boolean credit(long value, long userId) throws SQLException, IOException {
+        return transactionRepository.add(TransactionType.CREDIT, value, userId);
+    }
+
+    public List<Transaction> transactions(long userId) throws SQLException, IOException {
+        return transactionRepository.findAll().values().stream().filter(transaction -> transaction.getUserId() == userId).sorted(Comparator.comparing(Transaction::getDate)).collect(Collectors.toList());
     }
 }
