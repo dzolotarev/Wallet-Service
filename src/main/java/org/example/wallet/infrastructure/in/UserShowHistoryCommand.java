@@ -1,6 +1,5 @@
 package org.example.wallet.infrastructure.in;
 
-import org.example.wallet.domain.Account;
 import org.example.wallet.domain.Transaction;
 import org.example.wallet.domain.impl.AuditOption;
 import org.example.wallet.service.AuditManager;
@@ -8,19 +7,16 @@ import org.example.wallet.service.TransactionManager;
 import org.example.wallet.service.UserManager;
 import org.example.wallet.utils.ConsoleHelper;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserShowHistoryCommand extends UserCommand {
-
     @Override
-    public void execute() {
+    public void execute() throws SQLException, IOException {
         ConsoleHelper.writeMessage("Просмотр истории операций.");
-        AuditManager auditManager = new AuditManager();
-        Account account = getCurretUserAccount();
-
-        long userId = account.getUserId();
-        List<Transaction> currentUserTransactions = new TransactionManager().transactions(userId);
-        auditManager.audit(OperationUser.HISTORY, UserManager.getCurrentUser().getId(), AuditOption.SUCCESSFUL);
+        List<Transaction> currentUserTransactions = TransactionManager.getInstance().transactions(getCurretUserAccount().getUserId());
+        AuditManager.getInstance().audit(OperationUser.HISTORY, UserManager.getCurrentUser().getId(), AuditOption.SUCCESSFUL);
         if (currentUserTransactions.isEmpty()) {
             ConsoleHelper.writeMessage("\tУ вас не было еще ни одной операции.");
         } else {

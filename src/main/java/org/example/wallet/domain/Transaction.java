@@ -2,11 +2,14 @@ package org.example.wallet.domain;
 
 import org.example.wallet.domain.impl.TransactionImpl;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public interface Transaction {
-
+/**
+ * Interface describing the Transaction
+ */
+public interface Transaction extends Serializable {
     long getUserId();
 
     void setUserId(long userId);

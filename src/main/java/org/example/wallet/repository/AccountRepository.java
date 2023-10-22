@@ -2,6 +2,9 @@ package org.example.wallet.repository;
 
 import org.example.wallet.domain.Account;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public interface AccountRepository {
 
     /**
@@ -10,7 +13,7 @@ public interface AccountRepository {
      * @param userId user ID from User, not null
      * @return true/false: depending on the result of account creation
      */
-    boolean createAccount(long userId);
+    boolean createAccount(long userId) throws SQLException, IOException;
 
     /**
      * The method credits the value to the user's Account in repository
@@ -19,7 +22,7 @@ public interface AccountRepository {
      * @param value  the amount of funds credited to the Account
      * @return true/false: depending on the result of the operation
      */
-    boolean credit(long userId, long value);
+    boolean credit(long userId, long value) throws SQLException, IOException;
 
     /**
      * The method removes funds from the user's Account in repository
@@ -28,7 +31,7 @@ public interface AccountRepository {
      * @param value  the amount of funds debited from the Account
      * @return true/false: depending on the result of the operation
      */
-    boolean debit(long userId, long value);
+    boolean debit(long userId, long value) throws SQLException, IOException;
 
     /**
      * The method returns the Account object by userId from repository
@@ -36,5 +39,5 @@ public interface AccountRepository {
      * @param userId user ID from User, not null
      * @return returns the Account object by userId from repository
      */
-    Account findUserAccount(long userId);
+    Account findUserAccount(long userId) throws IOException, SQLException;
 }

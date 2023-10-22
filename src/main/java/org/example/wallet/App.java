@@ -6,7 +6,13 @@ import org.example.wallet.infrastructure.in.CommandExecutor;
 import org.example.wallet.infrastructure.in.Operation;
 import org.example.wallet.infrastructure.in.OperationBasic;
 import org.example.wallet.infrastructure.in.OperationUser;
+import org.example.wallet.repository.db.AccountRepositoryDBImpl;
+import org.example.wallet.repository.db.AuditRepositoryDBImpl;
+import org.example.wallet.repository.db.TransactionRepositoryDBImpl;
+import org.example.wallet.repository.db.UserRepositoryDBImpl;
 import org.example.wallet.service.UserManager;
+import org.example.wallet.service.db.DbManager;
+import org.example.wallet.service.db.impl.DbManagerPostgresImpl;
 import org.example.wallet.utils.ConsoleHelper;
 
 import java.io.IOException;
@@ -16,9 +22,13 @@ import java.io.IOException;
  */
 public class App {
     public static void main(String[] args) {
-        //ToDo Надо бы сделать через DI в следующий раз
-//        UserRepository userRepository = new UserRepositoryImpl();
-//        UserManager userManager = new UserManager(userRepository);
+        DbManager dbManager = new DbManagerPostgresImpl();
+//        liquibaseMigration(dbManager);
+        UserRepositoryDBImpl.init(dbManager);
+        AccountRepositoryDBImpl.init(dbManager);
+        TransactionRepositoryDBImpl.init(dbManager);
+        AuditRepositoryDBImpl.init(dbManager);
+
         Operation operation = null;
         do {
             try {
@@ -29,7 +39,7 @@ public class App {
             }
 
         } while (operation != OperationBasic.EXIT);
-
+        dbManager.closeConnection();
     }
 
     public static Operation askOperation(User user) throws IOException {
@@ -50,8 +60,5 @@ public class App {
             ConsoleHelper.writeMessage(String.format("\t %d - Выйти из аккаунта", OperationUser.LOGOUT.ordinal()));
             return OperationUser.values()[ConsoleHelper.readInt()];
         }
-
-//        return Operation.values()[ConsoleHelper.readInt()];
     }
-
 }

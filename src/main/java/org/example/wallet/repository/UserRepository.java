@@ -2,6 +2,8 @@ package org.example.wallet.repository;
 
 import org.example.wallet.domain.User;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserRepository {
@@ -13,16 +15,13 @@ public interface UserRepository {
      * @param name     user's name, not null
      * @return true/false: depending on the result of the operation
      */
-    boolean add(String login, String password, String name);
+    boolean add(String login, String password, String name) throws SQLException, IOException;
 
     /**
      * The method searches for User by userId
      *
      * @param login search criteria, not null
-     * @return кeturns a User object or null
+     * @return returns a User object or null
      */
-    User findUserByLogin(String login);
-
-    List<User> findAll();
-
+    User findUserByLogin(String login) throws IOException, SQLException;
 }

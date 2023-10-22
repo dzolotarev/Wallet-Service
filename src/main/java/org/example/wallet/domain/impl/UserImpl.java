@@ -8,9 +8,10 @@ public class UserImpl implements User {
 
     private final long id;
     private final String login;
-    private final Date createdAt;
     private String password;
     private String name;
+    private Date createdAt;
+
 
     public UserImpl(long id, String login, String password) {
         this.id = id;
@@ -51,4 +52,10 @@ public class UserImpl implements User {
     public Date getCreatedAt() {
         return createdAt;
     }
+
+    @Override
+    public void setCreatedAt(Date date) {
+        this.createdAt = date;
+    }
+
 }

@@ -28,5 +28,4 @@ public class AuditRepositoryImpl implements AuditRepository {
     public List<Audit> findAll() {
         return auditList;
     }
-
 }

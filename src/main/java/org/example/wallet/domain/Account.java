@@ -2,8 +2,10 @@ package org.example.wallet.domain;
 
 import org.example.wallet.domain.impl.AccountImpl;
 
+/**
+ * Interface describing the Account
+ */
 public interface Account {
-
     long getUserId();
 
     long getBalance();
@@ -14,7 +16,6 @@ public interface Account {
      * Factory for creating Account objects
      */
     interface Factory {
-
         static Account create(long userId) {
             return new AccountImpl(userId);
         }

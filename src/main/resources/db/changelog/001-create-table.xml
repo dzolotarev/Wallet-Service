@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+    <changeSet id="000" author="dzolotarev">
+        <sql dbms="postgresql" endDelimiter=";">
+            CREATE SCHEMA IF NOT EXISTS wallet
+        </sql>
+    </changeSet>
+
+    <changeSet id="001" author="dzolotarev">
+        <createTable schemaName="wallet" tableName="users" >
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="createdat" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002" author="dzolotarev">
+        <createTable schemaName="wallet" tableName="accounts">
+            <column name="userid" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="balance" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003" author="dzolotarev">
+        <createTable schemaName="wallet" tableName="transactions">
+            <column name="userid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="UUID" defaultValueComputed="uuid_generate_v1()">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004" author="dzolotarev">
+        <createTable schemaName="wallet" tableName="audit">
+            <column name="userid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operation" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auditoption" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createdat" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AccountRepositoryImpl implements AccountRepository {
-
     private static AccountRepository INSTANCE = null;
 
     private final List<Account> accounts = new LinkedList<>();
