@@ -13,6 +13,10 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * DB migrations
+ */
+
 public class DbMigration {
     public static void main(String[] args) {
         DbManager dbManager = new DbManagerPostgresImpl();
