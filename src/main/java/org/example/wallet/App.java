@@ -1,6 +1,5 @@
 package org.example.wallet;
 
-
 import org.example.wallet.domain.User;
 import org.example.wallet.infrastructure.in.CommandExecutor;
 import org.example.wallet.infrastructure.in.Operation;
@@ -23,7 +22,6 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) {
         DbManager dbManager = new DbManagerPostgresImpl();
-//        liquibaseMigration(dbManager);
         UserRepositoryDBImpl.init(dbManager);
         AccountRepositoryDBImpl.init(dbManager);
         TransactionRepositoryDBImpl.init(dbManager);
