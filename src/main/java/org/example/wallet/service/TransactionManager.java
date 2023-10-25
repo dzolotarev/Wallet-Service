@@ -2,7 +2,7 @@ package org.example.wallet.service;
 
 
 import org.example.wallet.domain.Transaction;
-import org.example.wallet.domain.TransactionType;
+import org.example.wallet.enums.TransactionType;
 import org.example.wallet.repository.TransactionRepository;
 import org.example.wallet.repository.db.TransactionRepositoryDBImpl;
 

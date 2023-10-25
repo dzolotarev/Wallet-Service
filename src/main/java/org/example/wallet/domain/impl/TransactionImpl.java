@@ -1,7 +1,7 @@
 package org.example.wallet.domain.impl;
 
 import org.example.wallet.domain.Transaction;
-import org.example.wallet.domain.TransactionType;
+import org.example.wallet.enums.TransactionType;
 
 import java.util.Date;
 import java.util.UUID;

@@ -1,5 +1,6 @@
 package org.example.wallet.domain;
 
+import org.example.wallet.enums.TransactionType;
 import org.example.wallet.domain.impl.TransactionImpl;
 
 import java.io.Serializable;

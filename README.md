@@ -6,6 +6,128 @@ Cервис управляет кредитными/дебетовыми тра�
 Денежный счет содержит текущий баланс игрока. Баланс можно изменить, зарегистрировав транзакции на счете,
 либо дебетовые транзакции (удаление средств), либо кредитные транзакции (добавление средств).
 
+
+## Версия 0.0.3
+### Требования:
+1. [x] Все взаимодействие осуществляeтся через отправку HTTP запросов
+2. [x] Сервлеты принимають JSON и отдают JSON
+3. [x] Возвращаются разные статус-коды
+4. [x] Метод логина выдавает JWT, остальные методы авторизационны и валидируют JWT (настройки в _resources/jwt.properties_)
+
+### API
+**Создать пользователя**
+* URL: /register
+* Method: POST
+* Success Response: 200
+* Success Response (body): true
+* Body request:
+{
+"login": "login",
+"password": "password",
+"name": "John Doe"
+}
+* Notes: "login", "password" can't be null
+
+**Авторизовать пользователя**
+* URL: /auth
+* Method: GET
+* Success Response: 200
+* Success Response (body):"eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YBw"
+* Body request:
+  {
+  "login": "login",
+  "password": "password",
+  }
+* Notes: "login", "password" can't be null
+
+**Посмотреть балланс пользователя**
+* URL: /balance
+* Method: GET
+* Success Response: 200
+* Success Response (body): Long
+* Body request:
+`  {
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YBw"
+  }`
+* Notes: "token" can't be null
+
+**Посмотреть историю операций пользователя**
+* URL: /history
+* Method: GET
+* Success Response: 200
+* Success Response (body):
+`[{
+  "userId": 1,
+  "id": "e34d9b3c-718b-11ee-bb4f-0242ac120002",
+  "type": "CREDIT",
+  "value": 1000,
+  "date": 1698055612294
+  },
+  {
+  "userId": 1,
+  "id": "e77dfc1a-718b-11ee-bb4f-0242ac120002",
+  "type": "DEBIT",
+  "value": 100,
+  "date": 1698055619324
+  }]`
+* Body request:
+  `{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YBw"
+  }`
+* Notes: "token" can't be null
+
+**Дебит операция со счетом пользователя**
+* URL: /debit
+* Method: POST
+* Success Response: 200
+* Success Response (body): true
+* Body request:
+ ` {
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YB",
+  "value": "100000"
+  }`
+* Notes: "token" can't be null, "value" - long
+
+**Кредит операция со счетом пользователя**
+* URL: /credit
+* Method: POST
+* Success Response: 200
+* Success Response (body): true
+* Body request:
+ ` {
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YB",
+  "value": "100000"
+  }`
+* Notes: "token" can't be null, "value" - long
+
+**Аудит всех операций всех пользователей**
+* URL: /audit
+* Method: GET
+* Success Response: 200
+* Success Response (body):
+  `[{
+  "operation": "AUTH",
+  "userId": 1,
+  "auditOption": "SUCCESSFUL",
+  "createdAt": 1698055580728
+  },
+  {
+  "operation": "BALANCE",
+  "userId": 1,
+  "auditOption": "SUCCESSFUL",
+  "createdAt": 1698055585730
+  }]`
+* Body request:
+  `{
+  "token": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk4MjM1MTgyLCJleHAiOjE2OTgyMzU5ODJ9.foSVKBBS0U9s1PUaYOLfTMR3aYByk5KXbQsryB6FfNZvLr0-UJvr5GDB-IldHs-tI1KsxRVOYbAb3y45659YB",
+  }`
+* Notes: "token" can't be null
+
+### ToDO
+1. [ ] Аудит переделать на аспекты
+2. [ ] Также реализовать на аспектах выполнение любого метода (с замером времени выполнения)
+3. [ ] Сервлеты должны быть покрыты тестами
+
 ## Версия 0.0.2
 ### Требования
 1. [x] Репозитории теперь пишут ВСЕ сущности в БД PostgreSQL

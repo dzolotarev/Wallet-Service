@@ -1,7 +1,7 @@
 package org.example.wallet.repository;
 
 import org.example.wallet.domain.Transaction;
-import org.example.wallet.domain.TransactionType;
+import org.example.wallet.enums.TransactionType;
 
 import java.io.IOException;
 import java.sql.SQLException;

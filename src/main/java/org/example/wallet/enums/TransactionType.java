@@ -1,4 +1,4 @@
-package org.example.wallet.domain;
+package org.example.wallet.enums;
 
 /**
  * Types of possible Transactions

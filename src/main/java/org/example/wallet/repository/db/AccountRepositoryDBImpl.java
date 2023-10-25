@@ -88,7 +88,7 @@ public class AccountRepositoryDBImpl implements AccountRepository {
 
             while (resultSet.next()) {
                 long balance = resultSet.getLong("balance");
-                account = Account.Factory.create(userId); // ToDO check
+                account = Account.Factory.create(userId);
                 account.setBalance(balance);
             }
         }

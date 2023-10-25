@@ -44,7 +44,7 @@ public class UserRepositoryDBImpl implements UserRepository {
             try (PreparedStatement preparedStatement = dbManager.prepareStatement(INSERT_USER)) {
                 preparedStatement.setString(1, login);
                 preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name); //ToDo check
+                preparedStatement.setString(3, name);
                 preparedStatement.executeUpdate();
             }
             return true;

@@ -1,10 +1,8 @@
 package org.example.wallet.repository.db;
 
 import org.example.wallet.domain.Audit;
-import org.example.wallet.domain.impl.AuditOption;
-import org.example.wallet.infrastructure.in.Operation;
-import org.example.wallet.infrastructure.in.OperationBasic;
-import org.example.wallet.infrastructure.in.OperationUser;
+import org.example.wallet.enums.AuditOption;
+import org.example.wallet.enums.Operation;
 import org.example.wallet.repository.AuditRepository;
 import org.example.wallet.service.db.DbManager;
 
@@ -43,18 +41,6 @@ public class AuditRepositoryDBImpl implements AuditRepository {
         }
     }
 
-    private static Operation getOperationFromValue(String name) {
-        try {
-            return OperationBasic.valueOf(name);
-        } catch (IllegalArgumentException e) {
-            try {
-                return OperationUser.valueOf(name);
-            } catch (IllegalArgumentException e1) {
-                throw e1;
-            }
-        }
-    }
-
     public boolean add(Audit audit) throws SQLException {
         try (PreparedStatement preparedStatement = dbManager.prepareStatement(INSERT_AUDIT)) {
             preparedStatement.setLong(1, audit.getUserId());
@@ -77,10 +63,9 @@ public class AuditRepositoryDBImpl implements AuditRepository {
                 Date date = new Date(resultSet.getTimestamp("createdat").getTime());// ToDO check for except
                 Audit audit = Audit.Factory.create();
                 audit.setUserId(userId);
-                audit.setOperation(getOperationFromValue(operation));
+                audit.setOperation(Operation.valueOf(operation));
                 audit.setAuditOption(AuditOption.valueOf(auditoption));
                 audit.setCreatedAt(date);
-
                 auditList.add(audit);
             }
         }
