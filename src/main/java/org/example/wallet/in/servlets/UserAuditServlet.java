@@ -33,7 +33,6 @@ public class UserAuditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
 
-        resp.setContentType("application/json");
         String jwt = ObjectMap.get().readTree(req.getInputStream()).get("token").asText(null);
         if (jwt == null) {
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
