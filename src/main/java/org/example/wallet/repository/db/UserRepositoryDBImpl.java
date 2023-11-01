@@ -44,7 +44,7 @@ public class UserRepositoryDBImpl implements UserRepository {
             try (PreparedStatement preparedStatement = dbManager.prepareStatement(INSERT_USER)) {
                 preparedStatement.setString(1, login);
                 preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name); //ToDo check
+                preparedStatement.setString(3, name);
                 preparedStatement.executeUpdate();
             }
             return true;
@@ -64,7 +64,7 @@ public class UserRepositoryDBImpl implements UserRepository {
                 String password = resultSet.getString("password");
                 String name = resultSet.getString("name");
                 Date createdAt = new Date(resultSet.getTimestamp("createdat").getTime());
-                user = User.Factory.create(id, login, password); // ToDO check for null
+                user = User.Factory.create(id, login, password);
 
                 user.setName(name);
                 user.setPassword(password);

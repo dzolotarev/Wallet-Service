@@ -1,8 +1,8 @@
 package org.example.wallet.service;
 
 import org.example.wallet.domain.Audit;
-import org.example.wallet.domain.impl.AuditOption;
-import org.example.wallet.infrastructure.in.Operation;
+import org.example.wallet.enums.AuditOption;
+import org.example.wallet.enums.Operation;
 import org.example.wallet.repository.AuditRepository;
 import org.example.wallet.repository.db.AuditRepositoryDBImpl;
 

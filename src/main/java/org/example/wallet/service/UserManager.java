@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class UserManager {
-    private static User currentUser;
     private static UserManager INSTANCE;
 
     private final UserRepository userRepository = UserRepositoryDBImpl.getInstance();
@@ -24,14 +23,6 @@ public class UserManager {
             INSTANCE = new UserManager();
         }
         return INSTANCE;
-    }
-
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public static void setCurrentUser(User user) {
-        currentUser = user;
     }
 
     public boolean register(String login, String password, String name) throws SQLException, IOException {
@@ -49,9 +40,5 @@ public class UserManager {
             return user;
         }
         return null;
-    }
-
-    public boolean isLoginExist(String login) throws IOException, SQLException {
-        return userRepository.findUserByLogin(login) != null;
     }
 }

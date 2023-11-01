@@ -2,7 +2,7 @@ package org.example.wallet.repository.db;
 
 import org.example.wallet.domain.Account;
 import org.example.wallet.domain.Transaction;
-import org.example.wallet.domain.TransactionType;
+import org.example.wallet.enums.TransactionType;
 import org.example.wallet.repository.AccountRepository;
 import org.example.wallet.repository.TransactionRepository;
 import org.example.wallet.service.db.DbManager;

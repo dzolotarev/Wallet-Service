@@ -1,7 +1,8 @@
 package org.example.wallet.domain.impl;
 
 import org.example.wallet.domain.Audit;
-import org.example.wallet.infrastructure.in.Operation;
+import org.example.wallet.enums.AuditOption;
+import org.example.wallet.enums.Operation;
 
 import java.util.Date;
 
